@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { Cards, Chart, CountryPicker } from './components';
+import { Cards, ChartComponent, CountryPicker, NavBar } from './components';
 import styles from './App.module.css';
+import { Grid, Item } from '@material-ui/core';
 
-import {fetchData} from './api'
+import { fetchData } from './api';
 
 function App() {
 
@@ -21,21 +22,27 @@ function App() {
   
   useEffect(() => {
     console.log(country);
-    if (country !== "global") {
-      (async () => {
-        const fetchedData = await fetchData(country);
-        // console.log(fetchedData);
-        setData(fetchedData);
-      })()
-    }
+    (async () => {
+      const fetchedData = await fetchData(country);
+      setData(fetchedData);
+    })()
   }, [country]);
 
   return (
-    <div className={styles.container}>
-      <Cards data={data}></Cards>
-      <CountryPicker setCountry={setCountry}></CountryPicker>
-      <Chart data={data} country={country}></Chart>
-    </div>
+    <>
+      <NavBar></NavBar>
+      <div className={styles.container}>
+        <CountryPicker setCountry={setCountry}></CountryPicker>
+        <Grid container spacing={10}>
+          <Grid item lg={4}>
+            <Cards data={data}></Cards>
+          </Grid>
+          <Grid item lg={8}>
+            <ChartComponent data={data} country={country}></ChartComponent>
+          </Grid>  
+        </Grid>
+      </div>
+    </> 
   );
 }
 

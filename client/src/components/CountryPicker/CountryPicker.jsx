@@ -10,11 +10,10 @@ const CountryPicker = ({setCountry}) => {
         (async () => {
             setFetchedCountries(await fetchCountries());
         })();
-        console.log(fetchedCountries);
-    },[setFetchedCountries])
+    },[])
 
     return (
-        <FormControl className={styles.formControl}>
+        <FormControl className={styles.formControl} variant="filled">
             <NativeSelect defaultValue="global" onChange={(e)=>setCountry(e.target.value)}>
                 <option value="global">Global</option>
                 {fetchedCountries.map((country, i) => (
