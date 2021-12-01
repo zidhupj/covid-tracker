@@ -4,6 +4,10 @@ const url = "https://covid19.mathdro.id/api";
 
 const url2 = "https://corona.lmao.ninja/v2";
 
+const url3 = "http://localhost:5000";
+
+
+
 export const fetchData = async (country) => {
     let changableUrl = `${url2}/all?yesterday`;
 
@@ -57,5 +61,23 @@ export const fetchHistoricalData = async (days) => {
         return structuredData;
     } catch (error) {
         
+    }
+}
+
+export const registerUser = async ({name,email,password}) => {
+    try {
+        const { data } = await axios.post(`${url3}/api/user/register`, {name,email,password});
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const loginUser = async ({email,password}) => {
+    try {
+        const { data } = await axios.post(`${url3}/api/user/login`, {email,password});
+        return data;
+    } catch (error) {
+        console.log(error);
     }
 }

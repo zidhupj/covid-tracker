@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { Cards, ChartComponent, CountryPicker, NavBar } from './components';
+import { Cards, ChartComponent, CountryPicker, NavBar, SignUp, LogIn } from './components';
 import styles from './App.module.css';
-import { Grid, Item } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
+import { Routes, Route } from 'react-router-dom';
 
 import { fetchData } from './api';
 
@@ -28,10 +29,8 @@ function App() {
     })()
   }, [country]);
 
-  return (
-    <>
-      <NavBar></NavBar>
-      <div className={styles.container}>
+  const home = (
+    <div className={styles.container}>
         <CountryPicker setCountry={setCountry}></CountryPicker>
         <Grid container spacing={10}>
           <Grid item lg={4}>
@@ -39,9 +38,19 @@ function App() {
           </Grid>
           <Grid item lg={8}>
             <ChartComponent data={data} country={country}></ChartComponent>
-          </Grid>  
+          </Grid>
         </Grid>
-      </div>
+    </div>
+  );
+
+  return (
+    <>
+      <NavBar></NavBar>
+      <Routes>
+        <Route path="/" element={home} />
+        <Route path="/signup" element={<SignUp/>} />
+        <Route path="/login" element={<LogIn/>} />
+      </Routes>
     </> 
   );
 }
