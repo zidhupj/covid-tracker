@@ -15,7 +15,7 @@ app.use('/api/user',authRoute);
 //middlewares
 app.use(express.json());
 app.use(cors({
-    origin:'http://localhost:5000'
+    origin:'*' 
 }));
 
 app.post('/',(req,res)=>{
@@ -33,8 +33,8 @@ mongoose.connect(process.env.DB_CONNECT,{
     useUnifiedTopology:true,
 },()=>{
     console.log('Database connection established');
-    app.listen(3000,'127.0.0.1' ,()=>{
-        console.log('Server is listening on port 3000');
+    app.listen(5000,'127.0.0.1' ,()=>{
+        console.log('Server is listening on port 5000');
     })
 });
 

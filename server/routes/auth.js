@@ -3,11 +3,17 @@ const router = express.Router();
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const {registerValidation,loginValidation} = require('../validation');
+const { registerValidation, loginValidation } = require('../validation');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 
 //router middlewares
 router.use(express.json());
+router.use(cors({
+    origin:'*' 
+}));
+router.use(cookieParser());
 
 
 //Registrations
@@ -19,6 +25,7 @@ router.post('/register',async (req,res)=>{
     const {error}=registerValidation(req.body);
     if(error){
         console.log('An error was found.');
+        console.log(error)
         return res.status(400).send(error.details[0].message);
     }
     console.log('No error found...');
@@ -47,7 +54,10 @@ router.post('/register',async (req,res)=>{
     try{
         console.log('Data successfully entered into database');
         const savedUser = await user.save();
-        res.send({user:user._id});
+
+        //Create and assign a token
+        const token = jwt.sign({_id:user._id}, process.env.TOKEN_SECRET);
+        res.send({ user_id: user._id, access_token:token });
     }
     catch(err){
         res.status(400).send(err.message);
@@ -87,7 +97,7 @@ router.post('/login',async (req,res)=>{
     //Create and assign a token
     const token = jwt.sign({_id:user._id}, process.env.TOKEN_SECRET);
 
-    res.header('auth-token', token).send(token);
+    res.send({ user_id: user._id, access_token:token });
     console.log(`Login succssful`);
 })
 
