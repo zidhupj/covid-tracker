@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { fetchHistoricalData } from '../../api';
 import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LineController, LineElement, PointElement, LinearScale, Title, BarElement} from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LineController, LineElement, PointElement, LinearScale, Title, BarElement } from 'chart.js';
 import styles from './ChartComponent.module.css'
 import { Chart } from 'react-google-charts'
 
 import { makeStyles, Card, CardContent } from '@material-ui/core'
 
 const useStyles = makeStyles({
-    graph: {backgroundColor:'white', padding: '20px', borderRadius: '10px', marginRight: '20px'},
+    graph: { backgroundColor: 'white', padding: '20px', borderRadius: '10px', marginRight: '20px' },
 })
 
 const ChartComponent = ({ data, country }) => {
@@ -22,12 +22,12 @@ const ChartComponent = ({ data, country }) => {
         (async () => {
             setHistoricalData(await fetchHistoricalData());
         })();
-    },[])
-    
+    }, [])
+
     ChartJS.register(CategoryScale, LineController, LineElement, PointElement, LinearScale, Title, BarElement);
 
     const barChart = (
-        data.confirmed ? (
+        data.confirmed !== undefined ? (
             <Bar
                 className={classes.graph}
                 data={{
@@ -38,7 +38,7 @@ const ChartComponent = ({ data, country }) => {
                             'rgba(0,0,155,0.5)',
                             'rgba(0,255,0,0.5)',
                             'rgba(255,0,0,0.5)'],
-                        data:[data.confirmed.value,data.recovered.value,data.deaths.value]
+                        data: [data.confirmed.value, data.recovered.value, data.deaths.value]
                     }]
                 }}
                 options={{
@@ -49,28 +49,27 @@ const ChartComponent = ({ data, country }) => {
                     }
                 }}
             ></Bar>
-        ): <div>Loading...</div>
+        ) : <div>Loading...</div>
     )
 
     const lineChart = (
-        historicalData.length !== 0?
-        <Chart
-            className={classes.graph}
-            width={'95%'}
-            height={'500px'}
-            chartType="Line"
-            data={historicalData}
-            loader={<div>Loading Chart</div>}
-            options={{
-                colors: [
-                    '#7f7fff',
-                    '#7fff7f',
-                    '#ff7f7f'
-                ],
-            }}
-            
-        >
-        </Chart> : <div>Loading...</div>
+        historicalData.length !== 0 ?
+            <Chart
+                className={classes.graph}
+                width={'95%'}
+                height={'500px'}
+                chartType="Line"
+                data={historicalData}
+                loader={<div>Loading Chart</div>}
+                options={{
+                    colors: [
+                        '#7f7fff',
+                        '#ff7f7f'
+                    ],
+                }}
+
+            >
+            </Chart> : <div>Loading...</div>
     )
 
     return (

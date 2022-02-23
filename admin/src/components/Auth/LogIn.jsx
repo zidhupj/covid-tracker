@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { Paper, makeStyles, Typography, OutlinedInput, FormControl, InputLabel, Button } from '@material-ui/core';
 import styles from './Auth.module.css'
-import { loginUser } from '../../api';
+import { loginAdmin } from '../../api/admin';
 
 const useStyles = makeStyles({
     container: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly', height: '60%', width: '30%' },
@@ -14,26 +14,22 @@ const useStyles = makeStyles({
 
 const LogIn = () => {
     const classes = useStyles();
-    const navigate = useNavigate();
 
-    const [user, setUser] = useState({ email: "", password: "" });
+    const [admin, setAdmin] = useState({ adminId: "", password: "" });
     const [cookies, setCookie, removeCookie] = useCookies(['access-token']);
     const [error, setError] = useState("");
-
+    const navigate = useNavigate();
 
     const clickHandler = async () => {
-        setError("");
         console.log("Clicked");
-        console.log(user);
-        const data = await loginUser(user);
+        const data = await loginAdmin(admin);
+        console.log(data);
         if (data.error !== undefined) {
             setError(data.error);
-            console.log(error);
         } else {
-            console.log(data);
             if (data.access_token !== undefined) {
                 setCookie("access-token", data.access_token, { path: '/' });
-                navigate('/');
+                navigate('/home');
             }
         }
     }
@@ -43,12 +39,12 @@ const LogIn = () => {
             <Paper className={classes.container}>
                 <div className={classes.container}>
                     <FormControl variant="outlined" >
-                        <InputLabel>Email</InputLabel>
-                        <OutlinedInput type="email" label="Email" className={classes.input_style} onChange={(e) => { setUser({ ...user, email: e.target.value }) }} />
+                        <InputLabel>Admin Id</InputLabel>
+                        <OutlinedInput type="text" label="Admin Id" className={classes.input_style} onChange={(e) => { setAdmin({ ...admin, adminId: e.target.value }) }} />
                     </FormControl>
                     <FormControl variant="outlined">
                         <InputLabel>Password</InputLabel>
-                        <OutlinedInput type="password" label="Password" className={classes.input_style} onChange={(e) => { setUser({ ...user, password: e.target.value }) }} />
+                        <OutlinedInput type="password" label="Password" className={classes.input_style} onChange={(e) => { setAdmin({ ...admin, password: e.target.value }) }} />
                     </FormControl>
                 </div>
                 <Button variant="outlined" className={classes.button_style} onClick={clickHandler}>Log In</Button>
