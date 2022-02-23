@@ -43,19 +43,29 @@ router.post('/login', async (req, res) => {
 })
 
 router.post('/pending', async (req, res) => {
-    verifyToken(req, res);
-    const pendingUsers = await User.find({ writer: 'pending' }, 'name profile');
-    console.log(pendingUsers);
-    res.send(pendingUsers);
+    try {
+        verifyToken(req, res);
+        const pendingUsers = await User.find({ writer: 'pending' }, 'name profile');
+        console.log(pendingUsers);
+        res.send(pendingUsers);
+    } catch (error) {
+        console.log(error);
+        res.send({ error: error });
+    }
 
 })
 
 router.post('/getUser', async (req, res) => {
-    verifyToken(req, res);
-    console.log(req.body)
-    const user = await User.findById(req.body.id, 'email writer');
-    console.log(user);
-    res.send(user);
+    try {
+        verifyToken(req, res);
+        console.log(req.body)
+        const user = await User.findById(req.body.id, 'email writer');
+        console.log(user);
+        res.send(user);
+    } catch (error) {
+        console.log(error);
+        res.send({ error: error });
+    }
 })
 router.post('/acceptRequest', async (req, res) => {
     try {

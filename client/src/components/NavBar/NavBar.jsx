@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import cx from 'classnames'
 
 const useStyles = makeStyles((theme) => ({
-    title: { flexGrow: 1, color: 'black', display: 'flex', justifyContent: 'space-between', paddingRight: '950px' },
+    title: { flexGrow: 1, color: 'black', display: 'flex', justifyContent: 'space-between', paddingRight: '800px' },
     auth: { display: 'grid', gridGap: '10px', alignItems: 'center' },
     signup: { gridColumn: 1 },
     login: { gridColumn: 2 },
@@ -19,18 +19,21 @@ const NavBar = ({ user }) => {
             <Toolbar>
                 <div className={classes.title}>
                     <Link to="/" className={classes.link}>
-                        <Typography variant="h6">COVID TRACKER</Typography>
+                        <Typography variant="h5">COVID TRACKER</Typography>
                     </Link>
                     <div className={classes.nav}>
                         <Link to="/article" className={classes.link}>
                             <Typography variant="h6">Article</Typography>
+                        </Link>
+                        <Link to="/write" className={classes.link}>
+                            <Typography variant="h6">Write</Typography>
                         </Link>
                         <Link to="/article" className={classes.link}>
                             <Typography variant="h6">Store</Typography>
                         </Link>
                     </div>
                 </div>
-                {user === undefined ?
+                {user === undefined || user.error !== undefined ?
                     (<div className={classes.auth}>
                         <Link to="/signup" className={cx(classes.link, classes.signup)}>
                             <Button variant="outlined">Sign Up</Button>

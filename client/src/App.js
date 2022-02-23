@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { Cards, ChartComponent, CountryPicker, NavBar, SignUp, LogIn, Profile, Article } from './components';
+import { Cards, ChartComponent, CountryPicker, NavBar, SignUp, LogIn, Profile, Article, Write, SingleArticle } from './components';
 import styles from './App.module.css';
 import { Grid } from '@material-ui/core';
 import { Routes, Route } from 'react-router-dom';
@@ -60,6 +60,8 @@ function App() {
         <Route path="/login" element={<LogIn />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/article" element={<Article />} />
+        <Route path="/article/:id" element={<SingleArticle />} />
+        <Route path="/write" element={<Write />} />
       </Routes>
     </>
   );

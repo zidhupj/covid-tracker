@@ -7,7 +7,7 @@ module.exports = (req, res) => {
     const token = req.body.access_token;
     if (!token) {
         console.log(`No web token found...Acess denied...`);
-        return res.send({ error: 'User not authentic' });
+        return new Error(`User not authentic`);
     }
     console.log(`Token available...`);
 
@@ -21,6 +21,6 @@ module.exports = (req, res) => {
     }
     catch (err) {
         console.log(`Unauthentic Web Token...Acess denied...`);
-        return res.send({ error: 'Invalid Token' });
+        return new Error('Invalid Token');
     }
 }

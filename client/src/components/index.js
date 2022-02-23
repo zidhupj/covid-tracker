@@ -6,3 +6,5 @@ export { default as SignUp } from './Auth/SignUp.jsx'
 export { default as LogIn } from './Auth/LogIn.jsx';
 export { default as Profile } from './Profile/Profile.jsx'
 export { default as Article } from './Article/Article.jsx'
+export { default as Write } from './Article/Write.jsx'
+export { default as SingleArticle } from './Article/SingleArticle.jsx'

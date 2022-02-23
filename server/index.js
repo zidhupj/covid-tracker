@@ -10,11 +10,13 @@ dotenv.config()
 const authRoute = require('./routes/auth')
 const userRoute = require('./routes/user')
 const adminRoute = require('./routes/admin')
+const articleRoute = require('./routes/article')
 
 // Route middlewares
 app.use('/api/auth', authRoute);
 app.use('/api/user', userRoute);
 app.use('/api/admin', adminRoute);
+app.use('/api/article', articleRoute);
 
 //middlewares
 app.use(express.json());
