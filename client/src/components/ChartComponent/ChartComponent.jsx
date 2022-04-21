@@ -27,7 +27,7 @@ const ChartComponent = ({ data, country }) => {
     ChartJS.register(CategoryScale, LineController, LineElement, PointElement, LinearScale, Title, BarElement);
 
     const barChart = (
-        data.confirmed !== undefined ? (
+        data !== undefined && data.confirmed !== undefined ? (
             <Bar
                 className={classes.graph}
                 data={{
@@ -56,8 +56,7 @@ const ChartComponent = ({ data, country }) => {
         historicalData.length !== 0 ?
             <Chart
                 className={classes.graph}
-                width={'95%'}
-                height={'500px'}
+                height={"95%"}
                 chartType="Line"
                 data={historicalData}
                 loader={<div>Loading Chart</div>}
@@ -67,14 +66,13 @@ const ChartComponent = ({ data, country }) => {
                         '#ff7f7f'
                     ],
                 }}
-
             >
             </Chart> : <div>Loading...</div>
     )
 
     return (
-        <Card>
-            <CardContent>
+        <Card class="imp">
+            <CardContent style={{ backgroundColor: "#ffede9", width: "900px", borderRadius: "10px", paddingRight: "10px", height: "500px", paddingBottom: "10px" }}>
                 {country === "global" ? lineChart : barChart}
             </CardContent>
         </Card>

@@ -4,7 +4,7 @@ module.exports = (req, res) => {
 
     // Checking for web token
     console.log('Request recieved...checking for web token...');
-    const token = req.body.access_token;
+    const token = req.body.access_token ? req.body.access_token : req.headers.access_token;
     if (!token) {
         console.log(`No web token found...Acess denied...`);
         return new Error(`User not authentic`);
@@ -16,6 +16,7 @@ module.exports = (req, res) => {
     try {
         const verified = jwt.verify(token, process.env.TOKEN_SECRET);
         req.user = verified;
+        console.log("user", req.user);
         console.log(`Token is verified to be authentic...`);
         return
     }

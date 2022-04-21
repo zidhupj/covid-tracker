@@ -2,10 +2,11 @@ import { Card, CardContent, Typography, makeStyles } from '@material-ui/core'
 import CountUp from 'react-countup';
 
 const useStyles = makeStyles({
-    container: { marginLeft:'1rem', display: 'grid', gridGap: 20,},
+    container: { marginLeft: '1rem', display: 'grid', gridGap: 20 },
     infected: { borderBottom: '10px solid rgba(0, 0, 255, 0.5)' },
     recovered: { borderBottom: '10px solid rgba(0, 255, 0, 0.5)' },
     deaths: { borderBottom: '10px solid rgba(255, 0, 0, 0.5)' },
+    fakeBlue: { backgroundColor: "#dfebff" }
 })
 
 const Cards = ({ data }) => {
@@ -19,7 +20,7 @@ const Cards = ({ data }) => {
     return (
         <div className={classes.container}>
             <Card className={classes.infected}>
-                <CardContent>
+                <CardContent className={classes.fakeBlue}>
                     <Typography color="textSecondary" gutterBottom>Infected</Typography>
                     <Typography variant="h5">
                         <CountUp
@@ -34,7 +35,7 @@ const Cards = ({ data }) => {
                 </CardContent>
             </Card>
             <Card className={classes.recovered}>
-                <CardContent>
+                <CardContent className={classes.fakeBlue}>
                     <Typography color="textSecondary" gutterBottom>Recovered</Typography>
                     <Typography variant="h5">
                         <CountUp
@@ -48,8 +49,8 @@ const Cards = ({ data }) => {
                     <Typography variant="body2">Number of recoveries from COVID-19</Typography>
                 </CardContent>
             </Card>
-            <Card className={classes.deaths}>
-                <CardContent>
+            <Card className={classes.deaths} >
+                <CardContent className={classes.fakeBlue}>
                     <Typography color="textSecondary" gutterBottom>Deaths</Typography>
                     <Typography variant="h5">
                         <CountUp

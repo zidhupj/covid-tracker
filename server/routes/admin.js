@@ -36,7 +36,7 @@ router.post('/login', async (req, res) => {
     }
 
     //Create and assign a token
-    const token = jwt.sign({ _id: admin._id }, process.env.TOKEN_SECRET);
+    const token = jwt.sign({ _id: admin._id, admin: true }, process.env.TOKEN_SECRET);
 
     res.send({ admin_id: admin._id, access_token: token });
     console.log(`Login succssful`);
@@ -45,12 +45,15 @@ router.post('/login', async (req, res) => {
 router.post('/pending', async (req, res) => {
     try {
         verifyToken(req, res);
+        if (!req.user.admin) {
+            return res.send({ error: `You are not authorised to perform this action.` });
+        }
         const pendingUsers = await User.find({ writer: 'pending' }, 'name profile');
         console.log(pendingUsers);
-        res.send(pendingUsers);
+        return res.send(pendingUsers);
     } catch (error) {
         console.log(error);
-        res.send({ error: error });
+        return res.send({ error: error });
     }
 
 })
@@ -58,6 +61,9 @@ router.post('/pending', async (req, res) => {
 router.post('/getUser', async (req, res) => {
     try {
         verifyToken(req, res);
+        if (!req.user.admin) {
+            return res.send({ error: `You are not authorised to perform this action.` });
+        }
         console.log(req.body)
         const user = await User.findById(req.body.id, 'email writer');
         console.log(user);
@@ -70,6 +76,9 @@ router.post('/getUser', async (req, res) => {
 router.post('/acceptRequest', async (req, res) => {
     try {
         verifyToken(req, res);
+        if (!req.user.admin) {
+            return res.send({ error: `You are not authorised to perform this action.` });
+        }
         console.log(req.body)
         await User.updateOne({ _id: req.body.id }, { writer: 'true' });
         res.send({ message: 'Request accepted' });
@@ -80,6 +89,9 @@ router.post('/acceptRequest', async (req, res) => {
 router.post('/rejectRequest', async (req, res) => {
     try {
         verifyToken(req, res);
+        if (!req.user.admin) {
+            return res.send({ error: `You are not authorised to perform this action.` });
+        }
         console.log(req.body)
         await User.updateOne({ _id: req.body.id }, { writer: 'reject' });
         res.send({ message: 'Request accepted' });

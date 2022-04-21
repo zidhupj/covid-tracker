@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom'
 import cx from 'classnames'
 
 const useStyles = makeStyles((theme) => ({
-    title: { flexGrow: 1, color: 'black' },
+    title: { flex: 1, color: 'black' },
     auth: { display: 'grid', gridGap: '10px' },
     signup: { gridColumn: 1 },
     login: { gridColumn: 2 },
-    link: { textDecoration: 'none' }
+    link: { textDecoration: 'none' },
+    sub: { display: 'flex', marginLeft: "200px", gap: "20px" }
 }))
 
 const NavBar = () => {
@@ -27,6 +28,14 @@ const NavBar = () => {
                         <Button variant="outlined">Log In</Button>
                     </Link>
                 </div>    */}
+                <div className={classes.sub}>
+                    <Link to="/home" className={cx(classes.title, classes.link)}>
+                        <Typography variant="button">HOME</Typography>
+                    </Link>
+                    <Link to="/products" className={cx(classes.link)}>
+                        <Typography variant="button">PRODUCT</Typography>
+                    </Link>
+                </div>
             </Toolbar>
             <Divider ></Divider>
         </>

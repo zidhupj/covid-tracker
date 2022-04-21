@@ -63,9 +63,9 @@ export const fetchHistoricalData = async (days) => {
     }
 }
 
-export const registerUser = async ({ name, email, password }) => {
+export const registerUser = async ({ name, email, password, otp, hashedOtp }) => {
     try {
-        const data = await axios.post(`${url3}/api/auth/register`, { name, email, password });
+        const data = await axios.post(`${url3}/api/auth/register`, { name, email, password, otp, hashedOtp });
         console.log(data.data);
         return data.data;
     } catch (error) {

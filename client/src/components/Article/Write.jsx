@@ -9,7 +9,8 @@ const useStyles = makeStyles((theme) => ({
     submit: { position: 'absolute', bottom: 50, right: 50, backgroundColor: "orange" },
     article: { display: "flex", flexDirection: "column", gap: "10px", width: "140vh" },
     editArea: { padding: "20px" },
-    para: { minHeight: "30px" }
+    para: { minHeight: "30px" },
+    box: { display: "flex", justifyContent: "center", alignItems: "center", height: "85vh", width: "75vw", fontSize: "40px", color: "grey" },
 }))
 
 let paragraphCount = 0;
@@ -67,7 +68,9 @@ const Write = () => {
             <Divider orientation="vertical" flexItem />
             <div className={classes.editArea}>
                 {itemList.length === 0 ?
-                    <div>Hello</div> :
+                    <div className={classes.box}>
+                        <div>Choose a component to add</div>
+                    </div> :
                     <div className={classes.article} >
                         {itemList.map((item, index) => {
                             if (item === 't0') {

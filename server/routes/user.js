@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
 
         //Checking if the account exists
         console.log('Checking if account exists');
-        const user = await User.findById(req.user._id, 'profile name');
+        const user = await User.findById(req.user?._id, 'profile name');
         if (!user) {
             console.log(`Account doesn't exist`);
             return res.send({ error: `Account doesn't exist` });

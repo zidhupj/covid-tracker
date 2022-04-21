@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     container: { padding: "30px" },
 }))
 
-const Article = () => {
+const Article = ({ xs }) => {
     const classes = useStyles();
     const [articles, setArticles] = useState([]);
 
@@ -23,7 +23,7 @@ const Article = () => {
     return (
         <Grid container spacing={5} className={classes.container}>
             {articles.map(article => (
-                <ArticleCard article={article} />
+                <ArticleCard article={article} xs={xs} />
             ))}
         </Grid>
     )

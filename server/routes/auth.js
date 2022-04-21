@@ -15,14 +15,44 @@ router.use(cors({
 }));
 router.use(cookieParser());
 
+function generateOTP() {
+    // Declare a digits variable 
+    // which stores all digits
+    var digits = '0123456789';
+    let OTP = '';
+    for (let i = 0; i < 6; i++) {
+        OTP += digits[Math.floor(Math.random() * 10)];
+    }
+    return OTP;
+}
+
+router.post('/otp', async (req, res) => {
+    const otp = generateOTP();
+    console.log(otp);
+    //Mail otp to user
+
+    //hash otp
+    const salt = await bcrypt.genSalt(10);
+    const hashedOtp = await bcrypt.hash(otp, salt);
+    res.send({ hashedOtp: hashedOtp });
+})
+
 
 //Registrations
 router.post('/register', async (req, res) => {
     console.log('Recieved user details from registration request...');
 
+    console.log(`Checking if otp is correct`);
+    console.log(req.body)
+    const validOtp = await bcrypt.compare(req.body.otp, req.body.hashedOtp);
+    if (!validOtp) {
+        console.log(`Incorrect Otp terminate signup`);
+        return res.send({ error: 'Invalid Otp' });
+    }
+
     //Validating user information
     console.log('Validating user data')
-    const { error } = registerValidation(req.body);
+    const { error } = registerValidation({ email: req.body.email, password: req.body.password, name: req.body.name });
     if (error) {
         console.log('An error was found.');
         console.log(error)
@@ -56,7 +86,7 @@ router.post('/register', async (req, res) => {
         const savedUser = await user.save();
 
         //Create and assign a token
-        const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+        const token = jwt.sign({ _id: user._id, admin: false }, process.env.TOKEN_SECRET);
         res.send({ user_id: user._id, access_token: token });
     }
     catch (err) {
@@ -95,7 +125,7 @@ router.post('/login', async (req, res) => {
     }
 
     //Create and assign a token
-    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+    const token = jwt.sign({ _id: user._id, admin: false }, process.env.TOKEN_SECRET);
 
     res.send({ user_id: user._id, access_token: token });
     console.log(`Login succssful`);

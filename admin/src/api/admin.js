@@ -12,6 +12,7 @@ export const loginAdmin = async ({ adminId, password }) => {
 }
 
 export const fetchPendingUsers = async () => {
+    console.log("qwq access token", cookies.get("access-token"))
     try {
         const { data } = await axios.post(`${url3}/api/admin/pending`, {
             access_token: cookies.get("access-token")

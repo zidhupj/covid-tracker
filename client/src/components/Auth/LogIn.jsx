@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { Paper, makeStyles, Typography, OutlinedInput, FormControl, InputLabel, Button } from '@material-ui/core';
 import styles from './Auth.module.css'
 import { loginUser } from '../../api';
+import { userRequest } from '../../api/requestMethods';
 
 const useStyles = makeStyles({
     container: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly', height: '60%', width: '30%' },

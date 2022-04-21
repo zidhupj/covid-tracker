@@ -8,20 +8,21 @@ const useStyles = makeStyles((theme) => ({
     container: { padding: "30px" },
 }))
 
-const ArticleCard = ({ article }) => {
+const ArticleCard = ({ article, xs = 4 }) => {
     const classes = useStyles();
     const navigate = useNavigate();
 
     const [articles, setArticles] = useState([]);
 
     const onClick = () => {
+        console.log("clicked", article._id)
         navigate(`/article/${article._id}`)
     }
 
     return (
-        <Grid item xs={4}>
+        <Grid item xs={xs}>
             <Card sx={{ maxWidth: 345 }}>
-                <CardActionArea onClick={onClick}>
+                <CardActionArea onClick={onClick} style={{ backgroundColor: "#dfebff" }}>
                     <CardMedia
                         component="img"
                         height="200"
