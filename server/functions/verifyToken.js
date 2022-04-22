@@ -5,6 +5,8 @@ module.exports = (req, res) => {
     // Checking for web token
     console.log('Request recieved...checking for web token...');
     const token = req.body.access_token ? req.body.access_token : req.headers.access_token;
+    console.log("Token recieved", token);
+    console.log("Request header", req.headers);
     if (!token) {
         console.log(`No web token found...Acess denied...`);
         return new Error(`User not authentic`);

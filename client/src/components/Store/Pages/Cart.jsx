@@ -46,6 +46,14 @@ const Cart = () => {
 
     useEffect(() => {
         (async () => {
+            console.log("something")
+        })()
+    }, [])
+
+
+    const makeCart = async () => {
+        await userRequest.post("/cart/");
+        (async () => {
             try {
 
                 const req = cart.products.map(product => ({
@@ -54,14 +62,12 @@ const Cart = () => {
                 console.log(req)
                 const res = await userRequest.put("/cart/", req)
                 console.log("cart res", res)
+                navigate("/payment")
             } catch (error) {
                 console.log(error)
             }
         })()
-    }, [cart])
 
-    const makeCart = async () => {
-        await userRequest.post("/cart/")
     }
 
     return (
@@ -125,15 +131,15 @@ const Cart = () => {
                     </div>
                     <div className={classes.summaryItem}>
                         <div className={classes.summaryItemText}>Shipping Discount</div>
-                        <div className={classes.summaryItemPrice}>&#x20B9; -40.00</div>
+                        <div className={classes.summaryItemPrice}>&#x20B9; {cart.total >= 500 ? -40.00 : 0}</div>
                     </div>
                     <div className={classes.summaryItem} style={{ fontWeight: "700", fontSize: "24px" }}>
                         <div className={classes.summaryItemText} >Total</div>
-                        <div className={classes.summaryItemPrice}>&#x20B9; {cart.total.toFixed(2)}</div>
+                        <div className={classes.summaryItemPrice}>&#x20B9; {cart.total >= 500 ? cart.total.toFixed(2) : (cart.total + 40).toFixed(2)}</div>
                     </div>
-                    <Link to="/payment">
-                        <button className={classes.btn} onClick={makeCart}>CHECKOUT NOW</button>
-                    </Link>
+
+                    <button className={classes.btn} onClick={makeCart}>CHECKOUT NOW</button>
+
                 </div>
             </div>
         </div>

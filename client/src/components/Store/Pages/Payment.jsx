@@ -68,7 +68,7 @@ const CheckoutForm = () => {
             console.log(res.data)
 
             dispatch(resetProduct())
-            setTimeout(navigate("/success"), 2000)
+            setTimeout(() => navigate("/success"), 3000)
 
         } catch (err) {
             console.log(err)

@@ -16,7 +16,11 @@ const ArticleCard = ({ article, xs = 4 }) => {
 
     const onClick = () => {
         console.log("clicked", article._id)
-        navigate(`/article/${article._id}`)
+        if (article.ext) {
+            window.open(article.link, '_blank');
+        } else {
+            navigate(`/article/${article._id}`)
+        }
     }
 
     return (

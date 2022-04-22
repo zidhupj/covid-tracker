@@ -2,19 +2,19 @@ export const categories = [
     {
         id: 1,
         img: "https://amsp.africa/all_media/2020/08/39-500ml-Handsanitizer.jpg",
-        title: "SANITIZER",
+        title: "SANITIZERS",
         cat: "sanitizer",
     },
     {
         id: 2,
         img: "https://www.romania-insider.com/sites/default/files/styles/article_large_image/public/2020-02/surgical_mask_id_173103361_c_aleksandr_zubkov_dreamstime.com_.jpg",
-        title: "MASK",
+        title: "MASKS",
         cat: "mask",
     },
     {
         id: 3,
         img: "https://scx1.b-cdn.net/csz/news/800/2020/toiletpaper.jpg",
-        title: "SUPPLIE",
+        title: "SUPPLIES",
         cat: "supplies",
     },
 ];

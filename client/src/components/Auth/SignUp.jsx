@@ -72,7 +72,7 @@ const SignUp = () => {
                         <OutlinedInput type="password" label="Re-Password" className={classes.input_style} onChange={(e) => { setUser({ ...user, re_password: e.target.value }) }} />
                     </FormControl>
                     {step === 2 && <FormControl variant="outlined" >
-                        <InputLabel>Otp</InputLabel>
+                        <InputLabel>OTP</InputLabel>
                         <OutlinedInput type="text" label="Otp" className={classes.input_style} onChange={(e) => { setOtp(e.target.value) }} />
                     </FormControl>}
                 </div>

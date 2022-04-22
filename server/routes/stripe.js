@@ -37,6 +37,7 @@ router.post("/create-payment-intent", async (req, res) => {
             items.forEach((async (item, key) => {
                 total += item.price * quantities[key];
             }))
+            if (total < 500) { total += 40 }
             console.log("Total payment", total);
 
             // Create a PaymentIntent with the order amount and currency

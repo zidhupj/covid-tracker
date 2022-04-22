@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 const { registerValidation, loginValidation } = require('../functions/validation');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-
+const nodemailer = require('nodemailer');
 
 // //router middlewares
 router.use(express.json());
@@ -30,7 +30,28 @@ router.post('/otp', async (req, res) => {
     const otp = generateOTP();
     console.log(otp);
     //Mail otp to user
+    console.log("email", process.env.EMAIL, "password", process.env.PASSWORD);
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.EMAIL,
+            pass: process.env.PASSWORD
+        }
+    });
+    var mailOptions = {
+        from: process.env.EMAIL,
+        to: req.body.email,
+        subject: 'COVID TRACKER website SIGNUP OTP',
+        text: `The otp for your account registration is ${otp}. Please enter this otp to complete your registration. Ignore this mail if you didn't request for registration.`
+    };
 
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
     //hash otp
     const salt = await bcrypt.genSalt(10);
     const hashedOtp = await bcrypt.hash(otp, salt);
@@ -86,8 +107,8 @@ router.post('/register', async (req, res) => {
         const savedUser = await user.save();
 
         //Create and assign a token
-        const token = jwt.sign({ _id: user._id, admin: false }, process.env.TOKEN_SECRET);
-        res.send({ user_id: user._id, access_token: token });
+        const token = jwt.sign({ _id: savedUser._id, admin: false }, process.env.TOKEN_SECRET);
+        res.send({ savedUser_id: user._id, access_token: token });
     }
     catch (err) {
         res.status(400).send(err.message);

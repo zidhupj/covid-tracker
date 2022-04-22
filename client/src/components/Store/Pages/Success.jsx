@@ -5,8 +5,8 @@ const Success = () => {
     console.log(location);
 
     return (
-        <div>
-            Successful
+        <div style={{ position: "absolute", top: 0, left: 0, height: "100vh", width: "100vw", display: "flex", alignItems: "center", justifyContent: "center", zIndex: "-1" }}>
+            <div style={{ fontSize: "40px", fontWeight: "200" }}>PAYMENT SUCCESSFUL! YOUR ORDER HAS BEEN PLACED.</div>
         </div>
     )
 }

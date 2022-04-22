@@ -22,6 +22,7 @@ const Article = ({ xs }) => {
 
     return (
         <Grid container spacing={5} className={classes.container}>
+            <ArticleCard article={{ title: "Latest Covid Prevention guide Lines", coverImage: "https://english.cdn.zeenews.com/sites/default/files/2020/03/02/847221-ministry-of-health.gif", ext: true, link: "https://www.mohfw.gov.in/" }} xs={xs} />
             {articles.map(article => (
                 <ArticleCard article={article} xs={xs} />
             ))}

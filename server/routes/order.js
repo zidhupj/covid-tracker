@@ -61,10 +61,10 @@ router.delete('/:id', async (req, res) => {
 })
 
 // Get user Orders
-router.get('/find/:userId', async (req, res) => {
+router.get('/find', async (req, res) => {
     try {
         verifyToken(req, res);
-        const orders = await Order.find({ userId: req.params.userId });
+        const orders = await Order.find({ userId: req.user._id });
         console.log(orders)
         return res.send(orders);
     } catch (error) {

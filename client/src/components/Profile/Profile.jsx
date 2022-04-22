@@ -2,23 +2,33 @@ import { useEffect, useState } from 'react'
 import { Paper, makeStyles, Typography, OutlinedInput, FormControl, Divider, Button } from '@material-ui/core';
 import styles from './Profile.module.css'
 import { getUserProfile, makeWriter } from '../../api/user';
+import { userRequest } from '../../api/requestMethods';
 
 const useStyles = makeStyles({
-    box: { height: '500px', width: '1000px', display: 'flex', alignItems: 'center', justifyContent: 'center' },
-    inbox1: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' },
-    inbox2: { display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'center', paddingLeft: '20px' },
+    box: { height: "fitContent", width: '1000px', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+    inbox1: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: "30px", marginRight: "10px" },
+    inbox2: { display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'center', paddingLeft: '20px', gap: "20px" },
+    orders: { width: '100%' }
 })
 
 const Profile = () => {
     const classes = useStyles();
 
-
+    const [orders, setOrders] = useState([]);
     const [user, setUser] = useState({});
 
     useEffect(() => {
         (async () => {
             const data = await (await getUserProfile()).data;
             setUser(data);
+        })();
+    }, [])
+
+    useEffect(() => {
+        (async () => {
+            const res = await userRequest.get("/order/find");
+            console.log(res.data)
+            setOrders(res.data);
         })();
     }, [])
 
@@ -59,6 +69,17 @@ const Profile = () => {
                                     <Button variant="outlined" onClick={makeWriterHandler}>Yes</Button>
                                 </div>)
                             }
+                            <Typography variant="h5">Your Orders:</Typography>
+                            <div className={classes.orders}>
+                                {orders?.map((order, index) => (
+                                    <>
+                                        <div style={{ height: "1px", width: "100%", backgroundColor: "teal" }}></div>
+                                        <Typography variant="h6">Order Id: {order._id}</Typography>
+                                        <Typography variant="h6">Order Amount: &#x20B9; {order.amount}</Typography>
+                                        <Typography variant="h6">Order Status: {order.status}</Typography>
+                                    </>
+                                ))}
+                            </div>
                         </div>
                     </div>)
                 }
